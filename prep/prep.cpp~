@@ -1,0 +1,64 @@
+#include <SDL/SDL.h>
+#include "SDL_rotozoom.h"
+#include <ros/ros.h>
+
+ 
+int main(int argc, char** argv)
+{
+	// ROS INITIALIZATION: announce node to ROS
+	ros::init(argc, argv, "prep");
+	ros::start();
+	ROS_INFO_STREAM("Compass started . . .");
+
+        SDL_Init(SDL_INIT_EVERYTHING);
+        SDL_Surface *screen, *image, *needle;
+	SDL_Surface* compatibleCompassNeedle = NULL;
+        screen = SDL_SetVideoMode(309, 400, 32, SDL_SWSURFACE);
+	SDL_FillRect(screen, NULL, 0x000000); // 0xFFFFFF = white in RGB, NULL = full window
+	SDL_Flip(screen);
+        bool running = true;
+	const int FPS = 40;	
+	Uint32 start;
+	int angle = 0;
+
+	
+	image = SDL_DisplayFormat(SDL_LoadBMP("OuterRing.bmp"));
+	SDL_SetColorKey(image, SDL_SRCCOLORKEY, SDL_MapRGB(screen->format, 255, 255, 255));
+	needle = SDL_DisplayFormat(SDL_LoadBMP("CompassNeedle.bmp"));
+	compatibleCompassNeedle = SDL_DisplayFormatAlpha(needle);
+	SDL_SetColorKey(needle, SDL_SRCCOLORKEY, SDL_MapRGB(screen->format, 255, 255, 255));
+        while(running) {
+		start = SDL_GetTicks();
+                SDL_Event event;
+                while(SDL_PollEvent(&event)) {
+                        switch(event.type) {
+                                case SDL_QUIT:
+                                        running = false;
+                                        break;
+                        }
+                }
+                //logic && render
+		SDL_Rect location;
+		location.x = 139.5;
+		location.y = 18;
+		angle+=20;
+		SDL_Surface* rotatedneedle = rotozoomSurface(needle, angle, 1.0, 0);
+		//recenter pivote for rotation
+       	 	location.x -= rotatedneedle->w/2-compatibleCompassNeedle->w/2;
+        	location.y -= rotatedneedle->h/2-compatibleCompassNeedle->h/2;
+		SDL_FillRect(screen, NULL, 0);
+		SDL_BlitSurface(image, NULL, screen, NULL);
+		SDL_BlitSurface(rotatedneedle, NULL, screen, &location);
+ 
+                SDL_Flip(screen);
+		if(1000/FPS > SDL_GetTicks()-start)
+		{
+			SDL_Delay(1000/FPS-(SDL_GetTicks()-start));	
+		}
+        }
+	SDL_FreeSurface(image);
+        SDL_Quit();
+	ros::spin();
+	ros::shutdown();
+        return 0;
+}
