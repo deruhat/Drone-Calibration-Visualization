@@ -20,7 +20,11 @@ void chatterCallback(const geometry_msgs::Point::ConstPtr& msg) {
 	SDL_Surface* compatibleCompassNeedle = NULL;
 	SDL_Surface* compatibleCompassNeedle2 = NULL;
 	SDL_Surface* compatibleCompassNeedle3 = NULL;
+	SDL_Surface* icon;
 	screen = SDL_SetVideoMode(941, 410, 32, SDL_SWSURFACE);
+	icon = SDL_LoadBMP("icon3.bmp");
+	SDL_SetColorKey(icon, SDL_SRCCOLORKEY, SDL_MapRGB(screen->format, 255, 255, 255));
+	SDL_WM_SetIcon(icon,NULL);
 	SDL_WM_SetCaption("DeruRPY", "DeruRPY");
 	TTF_Init();
 	if (TTF_Init() != 0)
@@ -102,29 +106,28 @@ void chatterCallback(const geometry_msgs::Point::ConstPtr& msg) {
 	SDL_SetColorKey(needle3, SDL_SRCCOLORKEY, SDL_MapRGB(screen->format, 255, 255, 255));
 	
 	//MOVEMENT DETECTION:
-  	ROS_INFO("Moved needle #1: [%f] degrees.", -angles[0]);
-  	ROS_INFO("Moved needle #2: [%f] degrees.", -angles[1]);
-  	ROS_INFO("Moved needle #3: [%f] degrees.", -angles[2]);
+  	ROS_INFO("Moved YAW: [%f] degrees.", -angles[0]);
+  	ROS_INFO("Moved PITCH: [%f] degrees.", -angles[1]);
+  	ROS_INFO("Moved ROLL: [%f] degrees.", -angles[2]);
 	
 	
 	//EVENT START:
 	start = SDL_GetTicks();
-    SDL_Event event;
-    while(SDL_PollEvent(&event)) {
-            switch(event.type) {
-                    case SDL_QUIT:
-                            running = false;
-                            break;
-            }
-    }
-    
-    //INITIAL DECLARATION FOR LOGIC AND RENDER ROTATION:
-    SDL_Rect c2_loc; // 2nd outercompass location
-    c2_loc.x = 316;
-    c2_loc.y = 0;
-    SDL_Rect c3_loc; // 3rd
-    c3_loc.x = 632;
-    c3_loc.y = 0;
+	SDL_Event event;
+	while(SDL_PollEvent(&event)) {
+	    switch(event.type) {
+		    case SDL_QUIT:
+			    SDL_Quit;
+			    break;
+	    }
+	}
+    	//INITIAL DECLARATION FOR LOGIC AND RENDER ROTATION:
+	SDL_Rect c2_loc; // 2nd outercompass location
+	c2_loc.x = 316;
+	c2_loc.y = 0;
+	SDL_Rect c3_loc; // 3rd
+	c3_loc.x = 632;
+	c3_loc.y = 0;
 	SDL_Rect location; // 1st needle initial location
 	location.x = 139.5;
 	location.y = 18;
@@ -134,7 +137,7 @@ void chatterCallback(const geometry_msgs::Point::ConstPtr& msg) {
 	SDL_Rect location3; // 3rd needle
 	location3.x = 771.5;
 	location3.y = 18;
-	
+
 	SDL_Rect text_loc;
 	text_loc.x = 147.5;
 	text_loc.y = 320;
@@ -144,7 +147,7 @@ void chatterCallback(const geometry_msgs::Point::ConstPtr& msg) {
 	SDL_Rect text_loc3;
 	text_loc3.x = 779.5;
 	text_loc3.y = 320;
-	
+
 	SDL_Rect yaw_loc;
 	yaw_loc.x = 3;
 	yaw_loc.y = 355;
@@ -154,7 +157,7 @@ void chatterCallback(const geometry_msgs::Point::ConstPtr& msg) {
 	SDL_Rect roll_loc;
 	roll_loc.x = 3;
 	roll_loc.y = 385;
-	
+
 	SDL_Rect ayaw_loc;
 	ayaw_loc.x = 100;
 	ayaw_loc.y = 355;
@@ -164,12 +167,12 @@ void chatterCallback(const geometry_msgs::Point::ConstPtr& msg) {
 	SDL_Rect aroll_loc;
 	aroll_loc.x = 100;
 	aroll_loc.y = 385;
-	
+
 	//LOGIC AND RENDER ROTATION:
-	SDL_Surface* rotatedneedle = rotozoomSurface(needle, (int)angles[0], 1.0, 0);
-	SDL_Surface* rotatedneedle2 = rotozoomSurface(needle2, (int)angles[1], 1.0, 0);
-	SDL_Surface* rotatedneedle3 = rotozoomSurface(needle3, (int)angles[2], 1.0, 0);
-	
+	SDL_Surface* rotatedneedle = rotozoomSurface(needle, angles[0], 1.0, 0);
+	SDL_Surface* rotatedneedle2 = rotozoomSurface(needle2, angles[1], 1.0, 0);
+	SDL_Surface* rotatedneedle3 = rotozoomSurface(needle3, angles[2], 1.0, 0);
+
 	//RECENTERING NEEDLE PIVOT:
  	location.x -= rotatedneedle->w/2-compatibleCompassNeedle->w/2;
 	location.y -= rotatedneedle->h/2-compatibleCompassNeedle->h/2;
@@ -177,7 +180,7 @@ void chatterCallback(const geometry_msgs::Point::ConstPtr& msg) {
 	location2.y -= rotatedneedle2->h/2-compatibleCompassNeedle2->h/2;
 	location3.x -= rotatedneedle3->w/2-compatibleCompassNeedle3->w/2;
 	location3.y -= rotatedneedle3->h/2-compatibleCompassNeedle3->h/2;
-	
+
 	//BLITTING IMAGES TO SURFACE AFTER ADJUSTMENT:
 	SDL_FillRect(screen, NULL, 0);
 	SDL_BlitSurface(image, NULL, screen, NULL);
@@ -195,16 +198,15 @@ void chatterCallback(const geometry_msgs::Point::ConstPtr& msg) {
 	SDL_BlitSurface(angleYAW, NULL, screen, &ayaw_loc);
 	SDL_BlitSurface(anglePITCH, NULL, screen, &apitch_loc);
 	SDL_BlitSurface(angleROLL, NULL, screen, &aroll_loc);
-	
+
 	//FLIPPING SCREEN:
    	SDL_Flip(screen);
 	if(1000/FPS > SDL_GetTicks()-start)
 	{
 		SDL_Delay(1000/FPS-(SDL_GetTicks()-start));	
 	}
-	
 	//WHEN QUIT:
-    atexit(SDL_Quit);
+    	//SDL_Quit;
 }
 
 int main(int argc, char** argv){
