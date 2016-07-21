@@ -1,5 +1,5 @@
 CC = g++
-CCFLAGS = -lSDL -lroscpp_serialization -I/opt/ros/indigo/include -L/opt/ros/indigo/lib -Wl,-rpath,/opt/ros/indigo/lib -lroscpp -lrosconsole -lrostime
+CCFLAGS = -lSDL -lSDL_ttf -lroscpp_serialization -std=c++0x -I/opt/ros/indigo/include -L/opt/ros/indigo/lib -Wl,-rpath,/opt/ros/indigo/lib -lroscpp -lrosconsole -lrostime
 
 all : compassOutput
 
