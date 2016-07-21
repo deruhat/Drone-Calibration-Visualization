@@ -20,7 +20,7 @@ void chatterCallback(const std_msgs::Int32::ConstPtr& msg) {
         bool running = true;
 	const int FPS = 40;	
 	Uint32 start;
-	int angle = 0;
+	int angle = 0;    
 
 	
 	image = SDL_DisplayFormat(SDL_LoadBMP("OuterRing.bmp"));

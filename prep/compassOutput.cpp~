@@ -29,7 +29,7 @@ void chatterCallback(const std_msgs::Int32::ConstPtr& msg) {
 	compatibleCompassNeedle = SDL_DisplayFormatAlpha(needle);
 	SDL_SetColorKey(needle, SDL_SRCCOLORKEY, SDL_MapRGB(screen->format, 255, 255, 255));
   	ROS_INFO("Moved needle: [%d] degrees.", -msg->data);
-        while(running) {
+        //while(running) {
 		start = SDL_GetTicks();
                 SDL_Event event;
                 while(SDL_PollEvent(&event)) {
@@ -57,9 +57,9 @@ void chatterCallback(const std_msgs::Int32::ConstPtr& msg) {
 		{
 			SDL_Delay(1000/FPS-(SDL_GetTicks()-start));	
 		}
-        }
-        SDL_FreeSurface(image);
-        SDL_Quit();
+        //}
+        //SDL_FreeSurface(image);
+        //SDL_Quit();
 }
 
 int main(int argc, char** argv){
@@ -68,7 +68,6 @@ int main(int argc, char** argv){
 	ros::NodeHandle n;
 	ROS_INFO_STREAM("Compass started . . .");
 	ros::Subscriber sub = n.subscribe("data", 1000, chatterCallback);
-	
 	ros::spin();
 	ros::shutdown();
         return 0;
