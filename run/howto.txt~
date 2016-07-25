@@ -1,7 +1,0 @@
-INSTRUCTIONS TO RUN DeruRPY:
-
-	1- Run [ $rosrun rosserial_python serial_node.py tcp ] in terminal to open port 11411.
-	2- Run input executable from within gumstix if you want to collect data from quad OR run ./compassInput in this folder to give it input manually.
-	3- Run ./compassOutput
-	4- Data should be collected.
-	
