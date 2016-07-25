@@ -237,7 +237,7 @@ int main(int argc, char** argv){
 		//SPIN THROUGH TOPIC ONCE IN EVERY LOOP:
 		ros::spinOnce();
 	}
-	
+	  
 	//FREEING WHEN QUIT:
 	SDL_FreeSurface(compatibleCompassNeedle);
 	SDL_FreeSurface(compatibleCompassNeedle2);

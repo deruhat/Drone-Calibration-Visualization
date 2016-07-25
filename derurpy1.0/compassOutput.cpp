@@ -97,15 +97,7 @@ int main(int argc, char** argv){
 	SDL_SetColorKey(needle2, SDL_SRCCOLORKEY, SDL_MapRGB(screen->format, 255, 255, 255));
 	SDL_SetColorKey(needle3, SDL_SRCCOLORKEY, SDL_MapRGB(screen->format, 255, 255, 255));
 	
-	//STRING REPRESENTATIONS OF THE ANGLES:
-	std::string yaw = std::to_string(-angles[0]);
-	std::string pitch = std::to_string(-angles[1]);
-	std::string roll = std::to_string(-angles[2]);
-
-	//STRING ANGLES TO BLIT LATER:
-	angleYAW = TTF_RenderText_Blended(fontRPY, yaw.c_str(), text_color);
-	anglePITCH = TTF_RenderText_Blended(fontRPY, pitch.c_str(), text_color);
-	angleROLL = TTF_RenderText_Blended(fontRPY, roll.c_str(), text_color);
+	
 		
 	//INITIAL SCREEN FLIPPING:
 	SDL_FillRect(screen, NULL, 0x000000); // 0xFFFFFF = white in RGB, NULL = full window
@@ -135,6 +127,16 @@ int main(int argc, char** argv){
 	  	ROS_INFO("YAW:   [%f] degrees.", -angles[0]);
 	  	ROS_INFO("PITCH: [%f] degrees.", -angles[1]);
 	  	ROS_INFO("ROLL:  [%f] degrees.", -angles[2]);
+		
+		//STRING REPRESENTATIONS OF THE ANGLES:
+		std::string yaw = std::to_string(-angles[0]);
+		std::string pitch = std::to_string(-angles[1]);
+		std::string roll = std::to_string(-angles[2]);
+
+		//STRING ANGLES TO BLIT LATER:
+		angleYAW = TTF_RenderText_Blended(fontRPY, yaw.c_str(), text_color);
+		anglePITCH = TTF_RenderText_Blended(fontRPY, pitch.c_str(), text_color);
+		angleROLL = TTF_RenderText_Blended(fontRPY, roll.c_str(), text_color);
 	
 	    	//INITIAL DECLARATION FOR LOGIC AND RENDER ROTATION:
 		SDL_Rect c2_loc; // 2nd outercompass location
