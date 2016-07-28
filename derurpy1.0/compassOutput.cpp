@@ -64,6 +64,7 @@ int main(int argc, char** argv){
 	SDL_Surface *text;
 	SDL_Surface *text2;
 	SDL_Surface *text3;
+	SDL_Surface *rights;
 	SDL_Surface *detailsYAW, *detailsPITCH, *detailsROLL, *angleYAW, *anglePITCH, *angleROLL;
 	SDL_Color text_color = {225, 225, 225};
 	text = TTF_RenderText_Blended(font, "X", text_color);
@@ -72,6 +73,7 @@ int main(int argc, char** argv){
 	detailsYAW = TTF_RenderText_Blended(fontRPY, "Yaw (X) angle:", text_color);
 	detailsPITCH = TTF_RenderText_Blended(fontRPY, "Pitch (Y) angle:", text_color);
 	detailsROLL = TTF_RenderText_Blended(fontRPY, "Roll (Z) angle:", text_color);
+	rights = TTF_RenderText_Blended(fontRPY, "All rights reserved for Abdulellah Abualshour @ Rutgers University", text_color);
 	if (text == NULL)
 	{
 		cerr << "TTF_RenderText_Blended() Failed: " << TTF_GetError() << endl;
@@ -168,25 +170,31 @@ int main(int argc, char** argv){
 		
 		//DETAILS LOCATIONs:
 		SDL_Rect yaw_loc;
-		yaw_loc.x = 3;
+		yaw_loc.x = 15;
 		yaw_loc.y = 355;
 		SDL_Rect pitch_loc;
-		pitch_loc.x = 3;
+		pitch_loc.x = 15;
 		pitch_loc.y = 370;
 		SDL_Rect roll_loc;
-		roll_loc.x = 3;
+		roll_loc.x = 15;
 		roll_loc.y = 385;
 		
 		//ANGLES LOCATIONs:
 		SDL_Rect ayaw_loc;
-		ayaw_loc.x = 100;
+		ayaw_loc.x = 112;
 		ayaw_loc.y = 355;
 		SDL_Rect apitch_loc;
-		apitch_loc.x = 100;
+		apitch_loc.x = 112;
 		apitch_loc.y = 370;
 		SDL_Rect aroll_loc;
-		aroll_loc.x = 100;
+		aroll_loc.x = 112;
 		aroll_loc.y = 385;
+		
+		//RIGHTS LOCATION:
+		SDL_Rect rights_loc;
+		rights_loc.x = 581;
+		rights_loc.y = 390;
+		
 		
 		//ROTATING NEEDLES:
 		SDL_Surface* rotatedneedle;
@@ -223,6 +231,7 @@ int main(int argc, char** argv){
 		SDL_BlitSurface(angleYAW, NULL, screen, &ayaw_loc);
 		SDL_BlitSurface(anglePITCH, NULL, screen, &apitch_loc);
 		SDL_BlitSurface(angleROLL, NULL, screen, &aroll_loc);
+		SDL_BlitSurface(rights, NULL, screen, &rights_loc);
 
 		//FREEING ROTATED NEEDLES TO AVOID MEMORY LEAK:
 		SDL_FreeSurface(rotatedneedle);
@@ -256,6 +265,7 @@ int main(int argc, char** argv){
 	SDL_FreeSurface(angleYAW);
 	SDL_FreeSurface(anglePITCH);
 	SDL_FreeSurface(angleROLL);
+	SDL_FreeSurface(rights);
 	TTF_CloseFont(font);
 	TTF_CloseFont(fontRPY);
 	TTF_Quit();
