@@ -170,24 +170,24 @@ int main(int argc, char** argv){
 		
 		//DETAILS LOCATIONs:
 		SDL_Rect yaw_loc;
-		yaw_loc.x = 12;
+		yaw_loc.x = 15;
 		yaw_loc.y = 355;
 		SDL_Rect pitch_loc;
-		pitch_loc.x = 12;
+		pitch_loc.x = 15;
 		pitch_loc.y = 370;
 		SDL_Rect roll_loc;
-		roll_loc.x = 12;
+		roll_loc.x = 15;
 		roll_loc.y = 385;
 		
 		//ANGLES LOCATIONs:
 		SDL_Rect ayaw_loc;
-		ayaw_loc.x = 109;
+		ayaw_loc.x = 112;
 		ayaw_loc.y = 355;
 		SDL_Rect apitch_loc;
-		apitch_loc.x = 109;
+		apitch_loc.x = 112;
 		apitch_loc.y = 370;
 		SDL_Rect aroll_loc;
-		aroll_loc.x = 107;
+		aroll_loc.x = 112;
 		aroll_loc.y = 385;
 		
 		//RIGHTS LOCATION:

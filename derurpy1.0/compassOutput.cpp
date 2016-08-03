@@ -7,7 +7,7 @@
 #include <geometry_msgs/Point.h>
 #include <string>
 #include <sstream>
-#define SDL_MAIN_HANDLED
+#define SDL_MAIN_HANDLED 
 
 using namespace std;
 
